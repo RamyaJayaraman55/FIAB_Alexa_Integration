@@ -1,0 +1,55 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h2>Order Status</h2>
+    <hr>
+    <h3>{{decode(id)}}</h3>
+    <br>
+  </div>
+  <div class="panel-body">
+    <div *ngIf="order">
+        <table mat-table [dataSource]="getJobsAsArray()">
+          <!-- JobId Column -->
+          <ng-container matColumnDef="jobid">
+            <th mat-header-cell *matHeaderCellDef> Job ID </th>
+            <td mat-cell *matCellDef="let element">
+              {{element.id}}
+            </td>
+          </ng-container>
+        
+          <!-- JobStatus Column -->
+          <ng-container matColumnDef="jobstatus">
+            <th mat-header-cell *matHeaderCellDef> Job Status </th>
+            <td mat-cell *matCellDef="let element"> 
+              {{element.status}}
+            </td>
+          </ng-container>
+
+          <!-- Capabilities Column -->
+          <ng-container matColumnDef="caps">
+            <th mat-header-cell *matHeaderCellDef> Capabilities </th>
+            <td mat-cell *matCellDef="let element"> 
+              <div *ngIf="element.caps !== undefined">
+                <mat-card class="my-card">
+                  <mat-card-content>
+                      <div *ngFor="let c of element.caps">
+                          <p>{{c}}</p>
+                      </div>
+                  </mat-card-content>
+                </mat-card>
+              </div>
+            </td>
+          </ng-container>
+        
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+    <br>
+    <br>
+    <div class="my-button-row">
+      <button mat-raised-button color="primary" (click)="list()">Back to Order List</button>
+      <button mat-raised-button color="primary" (click)="history(id)">Order History</button>
+    </div>
+    <br>
+  </div>
+</div>
